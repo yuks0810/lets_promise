@@ -46,7 +46,7 @@ services:
       dockerfile: docker/node/Dockerfile
     volumes:
       - ./frontend/:/usr/src/app
-    # command: sh -c "cd argon-dashboard-react-master && npm start"
-    command: sh -c "while :; do sleep 10; done"
+    command: sh -c "cd lets_promise_react && npm install && npm start"
+    # command: sh -c "while :; do sleep 10; done"
     ports:
       - "3000:3000"
