@@ -1,5 +1,8 @@
 import React from "react";
 import clsx from "clsx";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+// UI
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -15,7 +18,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import GroupIcon from '@material-ui/icons/Group';
+import GroupIcon from "@material-ui/icons/Group";
 import { Home, Info } from "@material-ui/icons/";
 
 const drawerWidth = 240;
@@ -82,17 +85,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const setIcon = (title) => {
-    if (title == "Home") {
-        return <Home />
-    }
-    else if (title == "About") {
-        return <Info />
-    }
-    else if (title == "Users") {
-        return <GroupIcon />
-    }
-}
+const NavBarInfo = [
+    {
+        title: "Home",
+        icon: <Home />,
+        path: "/",
+    },
+    {
+        title: "About",
+        icon: <Info />,
+        path: "/about",
+    },
+    {
+        title: "Users",
+        icon: <GroupIcon />,
+        path: "/users",
+    },
+];
 
 export default function MiniDrawer() {
     const classes = useStyles();
@@ -156,16 +165,20 @@ export default function MiniDrawer() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
-                    {["Home", "About", "Users"].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>
-                                {setIcon(text)}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
+                <Router>
+                    <List>
+                        {NavBarInfo.map((dict, index) => (
+                            <Link to={dict.path}>
+                                <ListItem button key={dict.title}>
+                                    <ListItemIcon>
+                                        {dict.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={dict.title} />
+                                </ListItem>
+                            </Link>
+                        ))}
+                    </List>
+                </Router>
             </Drawer>
         </div>
     );
