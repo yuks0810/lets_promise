@@ -18,13 +18,8 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import GroupIcon from "@material-ui/icons/Group";
-import { Home, ImageOutlined, Info } from "@material-ui/icons/";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import About from "../About";
-import HomePage from "../Home";
-import Users from "../Users";
+import NavBarInfo from "../../common/router";
 
 const drawerWidth = 240;
 
@@ -90,34 +85,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const NavBarInfo = [
-    {
-        title: "Home",
-        icon: <Home />,
-        exact: true,
-        path: "/",
-        component: <HomePage/>
-    },
-    {
-        title: "About",
-        icon: <Info />,
-        path: "/about",
-        component: <About />
-    },
-    {
-        title: "Users",
-        icon: <GroupIcon />,
-        path: "/users",
-        component: <Users />
-    },
-    {
-        title: "Profile",
-        icon: <AccountCircleIcon />,
-        path: "/profile",
-        component: <About />
-    },
-];
-
 export default function MiniDrawer() {
     const classes = useStyles();
     const theme = useTheme();
@@ -132,79 +99,65 @@ export default function MiniDrawer() {
     };
 
     return (
-        <Router>
-            <div className={classes.root}>
-                <CssBaseline />
-                <AppBar
-                    position="fixed"
-                    className={clsx(classes.appBar, {
-                        [classes.appBarShift]: open,
-                    })}
-                >
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            className={clsx(classes.menuButton, {
-                                [classes.hide]: open,
-                            })}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h6" noWrap>
-                            Mini variant drawer
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Drawer
-                    variant="permanent"
-                    className={clsx(classes.drawer, {
+        <div className={classes.root}>
+            <CssBaseline />
+            <AppBar
+                position="fixed"
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
+            >
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        className={clsx(classes.menuButton, {
+                            [classes.hide]: open,
+                        })}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap>
+                        Mini variant drawer
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                variant="permanent"
+                className={clsx(classes.drawer, {
+                    [classes.drawerOpen]: open,
+                    [classes.drawerClose]: !open,
+                })}
+                classes={{
+                    paper: clsx({
                         [classes.drawerOpen]: open,
                         [classes.drawerClose]: !open,
-                    })}
-                    classes={{
-                        paper: clsx({
-                            [classes.drawerOpen]: open,
-                            [classes.drawerClose]: !open,
-                        }),
-                    }}
-                >
-                    <div className={classes.toolbar}>
-                        <IconButton onClick={handleDrawerClose}>
-                            {theme.direction === "rtl" ? (
-                                <ChevronRightIcon />
-                            ) : (
-                                <ChevronLeftIcon />
-                            )}
-                        </IconButton>
-                    </div>
-                    <Divider />
-                    <List>
-                        {NavBarInfo.map((dict, index) => (
-                            <Link to={dict.path}>
-                                <ListItem button key={dict.title}>
-                                    <ListItemIcon>
-                                        {dict.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={dict.title} />
-                                </ListItem>
-                            </Link>
-                        ))}
-                    </List>
-                </Drawer>
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
-                    <Switch>
-                        {NavBarInfo.map((dict, index) => (
-                            <Route key={index} path={dict.path} exact={dict.exact}>
-                                {dict.component}
-                            </Route>
-                        ))}
-                    </Switch>
-                </main>
-            </div>
-        </Router>
+                    }),
+                }}
+            >
+                <div className={classes.toolbar}>
+                    <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === "rtl" ? (
+                            <ChevronRightIcon />
+                        ) : (
+                            <ChevronLeftIcon />
+                        )}
+                    </IconButton>
+                </div>
+                <Divider />
+                <List>
+                    {NavBarInfo.map((dict, index) => (
+                        <Link to={dict.path}>
+                            <ListItem button key={dict.title}>
+                                <ListItemIcon>{dict.icon}</ListItemIcon>
+                                <ListItemText primary={dict.title} />
+                            </ListItem>
+                        </Link>
+                    ))}
+                </List>
+            </Drawer>
+        </div>
     );
 }
