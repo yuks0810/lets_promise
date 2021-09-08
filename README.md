@@ -11,7 +11,7 @@ $ psql
 ### 起動コマンド
 
 ```
-$ docker-compose exec node sh -c "cd  argon-dashboard-react-master && npm install --legacy-peer-deps && npm install -g npm@7.21.1"
+$ docker-compose exec node sh -c "cd argon-dashboard-react-master && npm install --legacy-peer-deps && npm install -g npm@7.21.1"
 $ docker-compose up --build
 ```
 
